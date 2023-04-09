@@ -1,7 +1,7 @@
 # hapi-sns
 
 ![workflow](https://github.com/afgallo/hapi-sns/actions/workflows/main.yml/badge.svg)
-[![codecov](https://codecov.io/gh/afgallo/hapi-sns/branch/main/graph/badge.svg?token=19Y3ZLIDZF)](https://codecov.io/gh/afgallo/hapi-sns)
+[![codecov](https://codecov.io/gh/afgallo/hapi-sns/branch/main/graph/badge.svg?token=OGN40ZLIFZ)](https://codecov.io/gh/afgallo/hapi-sns)
 
 This Hapi plugin simplifies interaction with Amazon Simple Notification Service (SNS) by providing a convenient way to use the AWS SDK for JavaScript (v3) with Hapi.js applications.
 
