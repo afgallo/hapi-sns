@@ -64,4 +64,28 @@ describe('SNSAdapter', () => {
       Sinon.match.has('input', { TopicArn: topicArn, Message: message, ...options })
     )
   })
+
+  it('throws an error if topicArn or message is not provided', async () => {
+    const topicArn = 'arn:aws:sns:us-east-1:123456789012:MyTopic'
+    const message = 'Hello, world!'
+
+    await expect(snsAdapter.publish(null, message)).to.reject(Error, 'Topic ARN and message must be provided')
+    await expect(snsAdapter.publish(topicArn, null)).to.reject(Error, 'Topic ARN and message must be provided')
+  })
+
+  it('handles errors when publishing a message', async () => {
+    const topicArn = 'arn:aws:sns:us-east-1:123456789012:MyTopic'
+    const message = 'Hello, world!'
+    const options = { Subject: 'Test Subject' }
+
+    const error = new Error('publish error')
+    publishStub.rejects(error)
+
+    const consoleErrorStub = Sinon.stub(console, 'error') // keep test output clean
+
+    await expect(snsAdapter.publish(topicArn, message, options)).to.reject(Error, 'publish error')
+    Sinon.assert.calledOnceWithExactly(publishStub, Sinon.match.instanceOf(PublishCommand))
+
+    consoleErrorStub.restore()
+  })
 })
