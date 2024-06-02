@@ -88,4 +88,19 @@ describe('SNSAdapter', () => {
 
     consoleErrorStub.restore()
   })
+
+  it('creates a new SNSAdapter with a custom endpoint', async () => {
+    const endpoint = 'http://localhost:4575' // LocalStack SNS endpoint for local testing
+    const customSNSAdapter = new SNSAdapter({ endpoint })
+
+    expect(customSNSAdapter).to.exist()
+    expect(customSNSAdapter).to.be.an.instanceof(SNSAdapter)
+
+    // Check that the SNSClient was created with the correct endpoint
+    const client = customSNSAdapter.getSNSClient
+    const actualEndpoint = await client.config.endpoint()
+
+    expect(actualEndpoint.hostname).to.equal('localhost')
+    expect(actualEndpoint.port).to.equal(4575)
+  })
 })
